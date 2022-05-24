@@ -15,7 +15,7 @@ class Coordinator_Tests: XCTestCase {
         let coordinatorFlow = SpyCoordinatorFlow(navigationController: navigationController
             , viewModelFactory: viewModelFactory)
         
-        let coordinator = MainCoordinator(navigationController: navigationController
+        let coordinator = MasterCoordinatorImp(navigationController: navigationController
             , coordinatorFlow: coordinatorFlow
             , viewModelFactory: viewModelFactory)
         
@@ -35,13 +35,14 @@ class Coordinator_Tests: XCTestCase {
  It's a simple implementation for demonstrational purposes.
  More complex cases may require different code.
  */
-class SpyCoordinatorFlow: CoordinatorFlow {
-    let viewModelFactory: ViewModelFactory
+class SpyCoordinatorFlow: MasterRouting {
+    let viewModelFactory: MasterDependenciesFactory
     let navigationController: UINavigationController
     
     required init(
-        navigationController: UINavigationController
-        , viewModelFactory: ViewModelFactory) {
+        navigationController: UINavigationController,
+        viewModelFactory: MasterDependenciesFactory
+    ) {
         self.navigationController = navigationController
         self.viewModelFactory = viewModelFactory
     }
@@ -60,8 +61,8 @@ class SpyCoordinatorFlow: CoordinatorFlow {
  It's a simple implementation for demonstrational purposes.
  More complex cases may require different code.
  */
-class StubViewModelFactory: ViewModelFactory {
-    let factory = MainViewModelFactory()
+class StubViewModelFactory: MasterDependenciesFactory {
+    let factory = MasterDependenciesFactoryImp()
     
     var recordedMasterViewModel: MasterViewModel?
     func masterViewModel() -> MasterViewModel {
